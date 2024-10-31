@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import TaskList from './components/TaskList';
 import Button from './components/Button';
+import './App.css';
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos';
 
@@ -50,19 +51,55 @@ export default function App() {
   }
 
   return (
-    <div className="container">
-      <h1 className='project-title'>Task Tracker</h1>
-      {
-        tasks.length == 0 ? '' : <h1 className='total-tasks'>{tasks.filter(task => !task.complete).length} left to do </h1>
-      }
-
-      <input className='input-field' ref={tasksRef} placeholder='Add Task..' />
-      <Button bgColor="#35CF79" textColor="white" onClick={addTasks} text="Add Task" bottom="79px" right='95px' />
-      <Button bgColor="#0000FF" textColor="white" onClick={removeTasks} text="Remove Task" bottom="109px" right='-95px' />
-      <Button bgColor="#F7440B" textColor="white" onClick={removeAllTasks} text="Delete All Task" bottom="79px" right='95px' />
-      <Button bgColor="#F7CA0B" textColor="black" onClick={clearStorage} text="Clear Storage" bottom="108px" right='95px' />
-      {tasks.length > 0 ? <TaskList tasks={tasks} toggleTask={toggleTask} /> : "No Tasks to Show"}
-
+    <div className="App">
+      <div className="container">
+        <h1 className="project-title">Task Tracker</h1>
+        {tasks.length > 0 && (
+          <h2 className="total-tasks">
+            {tasks.filter(task => !task.complete).length} left to do
+          </h2>
+        )}
+        <div className="input-container">
+          <input
+            className="input-field"
+            ref={tasksRef}
+            placeholder="Add Task..."
+          />
+          <Button
+            bgColor="#35CF79"
+            textColor="white"
+            onClick={addTasks}
+            text="Add Task"
+          />
+        </div>
+        <div className="task-list">
+          {tasks.length > 0 ? (
+            <TaskList tasks={tasks} toggleTask={toggleTask} />
+          ) : (
+            <p>No Tasks to Show</p>
+          )}
+        </div>
+        <div className="button-container">
+          <Button
+            bgColor="#0000FF"
+            textColor="white"
+            onClick={removeTasks}
+            text="Remove Completed"
+          />
+          <Button
+            bgColor="#F7440B"
+            textColor="white"
+            onClick={removeAllTasks}
+            text="Delete All"
+          />
+          <Button
+            bgColor="#F7CA0B"
+            textColor="black"
+            onClick={clearStorage}
+            text="Clear Storage"
+          />
+        </div>
+      </div>
     </div>
   );
 }
